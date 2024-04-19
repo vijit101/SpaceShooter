@@ -6,14 +6,14 @@ using UnityEngine;
 [RequireComponent(typeof(CircleCollider2D))]
 public class Asteroid : MonoBehaviour
 {
-    public string name;
+    public string asteriodName;
     public Sprite asteroidSprite;
     public int AsteroidHP;
     public GameObject coinPrefab;
 
     public void SetValuefromScriptabletoAsteroid(AsteroidScriptable AsteroidScriptableobj)
     {
-        name = AsteroidScriptableobj.name;
+        asteriodName = AsteroidScriptableobj.asteriodName;
         AsteroidHP = AsteroidScriptableobj.asteriodHP;
         asteroidSprite = AsteroidScriptableobj.asteroidSprite;
         coinPrefab = AsteroidScriptableobj.coinPrefab;
@@ -33,10 +33,10 @@ public class Asteroid : MonoBehaviour
         Rigidbody2D rgbd = InstantedGameObj.AddComponent<Rigidbody2D>();
         rgbd.gravityScale = 0;
         //Debug.Log(AsteroidComponent["isflying"].ToString());
-        if (AsteroidComponent.AsteroidSprite != null)
+        if (AsteroidComponent.asteroidSprite != null)
         {
-            SpriteRenderer spriteRenderer = AsteroidComponent.AddComponent<SpriteRenderer>();
-            spriteRenderer.sprite = Asteroidscriptableobj.AsteroidSprite;
+            SpriteRenderer spriteRenderer = AsteroidComponent.gameObject.AddComponent<SpriteRenderer>();
+            spriteRenderer.sprite = Asteroidscriptableobj.asteroidSprite;
         }
         return InstantedGameObj;
     }
