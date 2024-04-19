@@ -11,7 +11,9 @@ public class SpaceShipMovement : MonoBehaviour, IDamagable
     public float timeBtwAttacks;
     bool canAttack;
     float Shiphp;
-    
+    GameObject SelectedGmo;
+
+
     public void SetHp(int hp )
     {
         this.Shiphp = hp;
@@ -64,8 +66,39 @@ public class SpaceShipMovement : MonoBehaviour, IDamagable
                 // play sound effects 
             }
         }
+
+        if(SelectedGmo != null)
+        {
+            Vector3 mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 newplayerpos = new Vector3(mousepos.x,mousepos.y, 0);
+            gameObject.transform.position = newplayerpos;
+
+            if (AttackTimer > timeBtwAttacks)
+            {
+                canAttack = true;
+            }
+
+            if (canAttack)
+            {
+                GameObject projectile = Instantiate(BulletProjectile);
+                projectile.transform.position = BulletSpawnpt.position;
+                canAttack = false;
+                AttackTimer = 0;
+
+                // play sound effects 
+            }
+        }
     }
 
+    private void OnMouseDown()
+    {
+        SelectedGmo = this.gameObject;
+        //Vector3 mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //Debug.Log("mousepos" + mousepos.x + " " + mousepos.y);
+        //Vector3 newplayerpos = new Vector3 (mousepos.x, mousepos.y, transform.position.z);
+        //gameObject.transform.position = mousepos;
+
+    }
     public void TakeDamage(int Damage)
     {
         Shiphp -= Damage;
